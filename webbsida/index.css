@@ -23,10 +23,7 @@ main {
     overflow: scroll
 
 }
-#containerForAllCities {
-    height: 600px;
-    background-color: aquamarine;
-}
+
 #addCityGreyBox { 
     padding: 10px;
     flex-basis: 400px;
@@ -51,6 +48,7 @@ main {
 #containerForAllSearchCities {
     height: 600px;
     background-color: aquamarine;
+
 }
 .inputGreyBox {
     background-color: darkgray;
@@ -64,9 +62,7 @@ main {
     margin-top: 5px;
 }
 
-p {
-    margin: 0;
-}
+
 h1 {
     margin: 0;
     padding-top: 20px;
@@ -89,13 +85,13 @@ input {
     text-align: center;
     margin-top: 10px;
 }
-button {
+.greenButton {
     background-color: green;
     padding: 10px;
     width: 100%;
     border: none;
 }
-button:hover {
+.greenButton:hover {
     background-color: rgb(3, 89, 3);
 }
 
@@ -104,4 +100,22 @@ button:hover {
 
 
 
+.cityBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
 
+.redButton {
+    height: 40px;
+    width: 70px;
+    background-color: red;
+}
+
+p {
+    margin: 0;
+}

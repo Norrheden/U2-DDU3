@@ -19,10 +19,153 @@ const cities = [
   { id: 42, name: "Strasbourg", country: "France"},
 ];
 
+let array = JSON.stringify(cities)
 
-function handler (request) {
+
+async function handler (request) {
+
+  const url = new URL(request.url)
+  const urlCheckIdForCityRoute = new URLPattern({pathname: "/cities/:id"})
+  const urlCheckIdForCityMatch = urlCheckIdForCityRoute.exec(url)
+  const headersCors = new Headers();
+  headersCors.set("access-control-allow-origin", "*");
+  headersCors.set("Content-Type", "application/json")
   
 
+
+
+
+  
+  if (url.pathname === "/cities") {
+
+    if (request.method === "OPTIONS") { ////////////////// MÅSTE HA VRF WTFFFFFFFFFFFFFFF
+      headersCors.set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+      headersCors.set("Access-Control-Allow-Headers", "Content-Type");
+      return new Response(null, {
+        status: 204,
+        headers: headersCors
+      });
+    }
+    
+    if (request.method === "GET") {
+      let response = new Response(array, {
+        status: 200,
+        headers: headersCors
+      });
+      return response;
+    }
+    if (request.method === "DELETE") {
+      
+      let requestBody = await request.json();
+      if(!requestBody.id) {
+        const response = new Response(null, {
+          status: 400,
+          headers: headersCors
+        })
+        return response;
+      } else {
+        for (let i = 0; i < cities.length; i++) {
+          if (requestBody.id === cities[i].id) {
+            cities.splice(i, 1);
+            array = JSON.stringify(cities)
+            const response = new Response(JSON.stringify({ delete: "Delete ok" }), {
+              status: 200,
+              headers: headersCors
+            });
+            return response;
+          }
+        }
+        const response = new Response(JSON.stringify({ error: "City not found" }), {
+          status: 404,
+          headers: headersCors
+        });
+        return response;
+
+      }
+    }
+    if(request.method === "POST") {
+      let requestBody = await request.json();
+      if(!(requestBody.name || requestBody.country)) {
+        const response = new Response(null, {
+          status: 400,
+          headers: headersCors
+        })
+        return response;
+      }
+      for(let city of cities) {
+        if(requestBody.name === city.name) {
+          const response = new Response(null, {
+            status: 409,
+            headers: headersCors
+          })
+          return response;
+        }
+      }
+      let maxId = 0
+      for(let city of cities) {
+        if(city.id > maxId) {
+          maxId = city.id
+        }
+      }
+      let newObject = {
+        id: maxId + 1,
+        name: requestBody.name,
+        country: requestBody.country
+      };
+      cities.push(newObject);
+      array = JSON.stringify(cities)
+      const response = new Response(JSON.stringify(newObject), {
+        status: 200,
+        headers: headersCors
+      })
+      return response;
+
+    }
+  }
+
+
+
+  if(urlCheckIdForCityMatch) {
+    const numberId = Number(urlCheckIdForCityMatch.pathname.groups.id);
+    for(let city of cities) {
+      if(city.id === numberId) {
+        const response = new Response(JSON.stringify(city), {
+          status: 200,
+          headers: headersCors
+        })
+        return response
+      }
+    }
+    const response = new Response(null, {
+      status: 404,
+      headers: headersCors
+    })
+    return response;
+  }
+
+  if(url.pathname === "/cities/search") {
+    if(request.method === "GET") {
+
+      if(url.searchParams.has("text")) {
+        let text = url.searchParams.get("text");
+        let splitText = text.split(",")
+        console.log(splitText)
+
+        let arrayForSearchParams = [];
+        for(let city of cities) {
+          const checkCity = city.name.split(",");
+
+          if(splitText.includes(checkCity)) {
+            arrayForSearchParams.push(city)
+          }
+        
+        }
+        console.log(arrayForSearchParams)
+      }
+      
+    }
+  }
+  
 
 }
 
