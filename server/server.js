@@ -45,7 +45,7 @@ async function handler (request) {
       }
       for (let city of cities) {
         if (city.name.toLowerCase().includes(text.toLowerCase()) ) {
-          if(country === city.country) {
+          if (!country || city.country === country) {
             arrayForSearchParams.push(city);
           } 
 
@@ -115,7 +115,8 @@ async function handler (request) {
     }
     if(request.method === "POST") {
       let requestBody = await request.json();
-      if(!(requestBody.name || requestBody.country)) {
+      console.log(requestBody)
+      if(!requestBody.name || !requestBody.country) {
         const response = new Response(null, {
           status: 400,
           headers: headersCors
@@ -172,6 +173,13 @@ async function handler (request) {
     })
     return response;
   }
+  const response = new Response(null, {
+    status: 400,
+    headers: headersCors
+  })
+  return response;
+
+  
 
   
   
