@@ -18,7 +18,6 @@ const cities = [
   { id: 38, name: "Maribor", country: "Slovenia"},
   { id: 42, name: "Strasbourg", country: "France"},
 ];
-
 let array = JSON.stringify(cities)
 
 
@@ -30,14 +29,45 @@ async function handler (request) {
   const headersCors = new Headers();
   headersCors.set("access-control-allow-origin", "*");
   headersCors.set("Content-Type", "application/json")
+
+  if(url.pathname === "/cities/search") {
+    if(url.searchParams.has("text")) {
+      
+      let text = url.searchParams.get("text");
+      let country = url.searchParams.get("country")
+      let arrayForSearchParams = [];
+      if(text === "") {
+        const response = new Response(JSON.stringify(arrayForSearchParams), {
+          status: 200,
+          headers: headersCors,
+        });
+        return response;
+      }
+      for (let city of cities) {
+        if (city.name.toLowerCase().includes(text.toLowerCase()) ) {
+          if(country === city.country) {
+            arrayForSearchParams.push(city);
+          } 
+
+        }
+      }
+      
+      const response = new Response(JSON.stringify(arrayForSearchParams), {
+        status: 200,
+        headers: headersCors,
+      });
+      return response;
+      
+    }
+    const response = new Response(null, {
+      status: 400,
+      headers: headersCors
+    })
+    return response
+  }
   
 
-
-
-
-  
   if (url.pathname === "/cities") {
-
     if (request.method === "OPTIONS") { ////////////////// MÅSTE HA VRF WTFFFFFFFFFFFFFFF
       headersCors.set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
       headersCors.set("Access-Control-Allow-Headers", "Content-Type");
@@ -143,28 +173,7 @@ async function handler (request) {
     return response;
   }
 
-  if(url.pathname === "/cities/search") {
-    if(request.method === "GET") {
-
-      if(url.searchParams.has("text")) {
-        let text = url.searchParams.get("text");
-        let splitText = text.split(",")
-        console.log(splitText)
-
-        let arrayForSearchParams = [];
-        for(let city of cities) {
-          const checkCity = city.name.split(",");
-
-          if(splitText.includes(checkCity)) {
-            arrayForSearchParams.push(city)
-          }
-        
-        }
-        console.log(arrayForSearchParams)
-      }
-      
-    }
-  }
+  
   
 
 }

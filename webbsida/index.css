@@ -45,11 +45,7 @@ main {
     overflow: scroll;
     padding: 10px;
 }
-#containerForAllSearchCities {
-    height: 600px;
-    background-color: aquamarine;
 
-}
 .inputGreyBox {
     background-color: darkgray;
     padding: 10px;
