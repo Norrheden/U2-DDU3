@@ -25,7 +25,6 @@ test1.addEventListener("click", function(){
         const responsePromise = fetch(request);
         const response = await responsePromise;
         const resource = await response.json() // För att response.json() retunerar en promise
-        console.log(resource)
     }
     getResponse()
 
@@ -45,7 +44,7 @@ test2.addEventListener("click", function(){
         resourcePromise.then(fullfillResource)
     }
     function fullfillResource(resource) {
-        console.log(resource)
+        
     }
 
 })
@@ -61,7 +60,7 @@ test3.addEventListener("click", function(){
         const responsePromise = fetch(request);
         const response = await responsePromise;
         const resource = await response.json() // För att response.json() retunerar en promise
-        console.log(resource)
+        
 
         
     }
@@ -80,7 +79,7 @@ test4.addEventListener("click", function(){
         resourcePromise.then(fullfillResource)
     }
     function fullfillResource(resource) {
-        console.log(resource)
+        
     }
 
 
@@ -93,7 +92,7 @@ test5.addEventListener("click", function(){
         const responsePromise = fetch(request);
         const response = await responsePromise;
         const resource = await response.json() // För att response.json() retunerar en promise
-        console.log(resource)
+        
     }
     getResponse()
 
@@ -109,7 +108,7 @@ test6.addEventListener("click", function(){
         resourcePromise.then(fullfillResource)
     }
     function fullfillResource(resource) {
-        console.log(resource)
+        
     }
 })
 
@@ -121,7 +120,7 @@ test7.addEventListener("click", function(){
         const responsePromise = fetch(request);
         const response = await responsePromise;
         const resource = await response.json() // För att response.json() retunerar en promise
-        console.log(resource)
+        
     }
     getResponse()
 
@@ -142,7 +141,7 @@ test8.addEventListener("click", function() {
         resourcePromise.then(fullfillResource)
     }
     function fullfillResource(resource) {
-        console.log(resource)
+        
     }
 })
 
@@ -157,7 +156,7 @@ test9.addEventListener("click", function(){
         const responsePromise = fetch(request);
         const response = await responsePromise;
         const resource = await response.json() // För att response.json() retunerar en promise
-        console.log(resource)
+        
     }
     getResponse()
 
@@ -177,7 +176,7 @@ test10.addEventListener("click", function() {
         resourcePromise.then(fullfillResource)
     }
     function fullfillResource(resource) {
-        console.log(resource)
+        
     }
 })
 
@@ -192,7 +191,7 @@ test11.addEventListener("click", function() {
         const responsePromise = fetch(request);
         const response = await responsePromise;
         const resource = await response.json() // För att response.json() retunerar en promise
-        console.log(resource)
+        
     }
     getResponse()
     
@@ -212,7 +211,7 @@ test12.addEventListener("click", function() {
         resourcePromise.then(fullfillResource)
     }
     function fullfillResource(resource) {
-        console.log(resource)
+        
     }
 })
 //13 Async
@@ -222,7 +221,7 @@ test13.addEventListener("click", function() {
         const responsePromise = fetch(request);
         const response = await responsePromise;
         const resource = await response.json() // För att response.json() retunerar en promise
-        console.log(resource)
+        
     }
     getResponse()
     
@@ -242,7 +241,7 @@ test14.addEventListener("click", function() {
         resourcePromise.then(fullfillResource)
     }
     function fullfillResource(resource) {
-        console.log(resource)
+        
     }
 })
 

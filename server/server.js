@@ -18,22 +18,24 @@ const cities = [
   { id: 38, name: "Maribor", country: "Slovenia"},
   { id: 42, name: "Strasbourg", country: "France"},
 ];
-let array = JSON.stringify(cities)
 
+let array = JSON.stringify(cities)
 
 async function handler (request) {
 
   const url = new URL(request.url)
-  const urlCheckIdForCityRoute = new URLPattern({pathname: "/cities/:id"})
-  const urlCheckIdForCityMatch = urlCheckIdForCityRoute.exec(url)
+  const urlCheckIdForCityRouteObject = new URLPattern({pathname: "/cities/:id"});
+  const urlCheckIdForCityMatchObject = urlCheckIdForCityRouteObject.exec(url);
+
+
+
   const headersCors = new Headers();
-  headersCors.set("access-control-allow-origin", "*");
   headersCors.set("Content-Type", "application/json")
+  headersCors.set("access-control-allow-origin", "*");
 
   if(url.pathname === "/cities/search") {
     if(url.searchParams.has("text")) {
-      
-      let text = url.searchParams.get("text");
+      let text = url.searchParams.get("text"); 
       let country = url.searchParams.get("country")
       let arrayForSearchParams = [];
       if(text === "") {
@@ -48,7 +50,6 @@ async function handler (request) {
           if (!country || city.country === country) {
             arrayForSearchParams.push(city);
           } 
-
         }
       }
       
@@ -68,7 +69,7 @@ async function handler (request) {
   
 
   if (url.pathname === "/cities") {
-    if (request.method === "OPTIONS") { ////////////////// MÅSTE HA VRF WTFFFFFFFFFFFFFFF
+    if (request.method === "OPTIONS") { 
       headersCors.set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
       headersCors.set("Access-Control-Allow-Headers", "Content-Type");
       return new Response(null, {
@@ -115,7 +116,6 @@ async function handler (request) {
     }
     if(request.method === "POST") {
       let requestBody = await request.json();
-      console.log(requestBody)
       if(!requestBody.name || !requestBody.country) {
         const response = new Response(null, {
           status: 400,
@@ -155,9 +155,8 @@ async function handler (request) {
   }
 
 
-
-  if(urlCheckIdForCityMatch) {
-    const numberId = Number(urlCheckIdForCityMatch.pathname.groups.id);
+  if(urlCheckIdForCityMatchObject) {
+    const numberId = Number(urlCheckIdForCityMatchObject.pathname.groups.id);
     for(let city of cities) {
       if(city.id === numberId) {
         const response = new Response(JSON.stringify(city), {
@@ -173,17 +172,14 @@ async function handler (request) {
     })
     return response;
   }
+
+
   const response = new Response(null, {
     status: 400,
     headers: headersCors
   })
   return response;
-
-  
-
-  
-  
-
-}
+} 
 
 Deno.serve(handler);
+
